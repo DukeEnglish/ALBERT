@@ -8,10 +8,10 @@
 # This script does fine-tuning and evaluation on 8 tasks, so it may take a
 # while to complete if you do not have a hardware accelerator.
 
-set -ex
-
-python3 -m venv $HOME/albertenv
-. $HOME/albertenv/bin/activate
+#set -ex
+#
+#python3 -m venv $HOME/albertenv
+#. $HOME/albertenv/bin/activate
 
 OUTPUT_DIR_BASE="$(mktemp -d)"
 OUTPUT_DIR="${OUTPUT_DIR_BASE}/output"
@@ -21,9 +21,9 @@ OUTPUT_DIR="${OUTPUT_DIR_BASE}/output"
 ALBERT_HUB_MODULE_HANDLE="https://tfhub.dev/google/albert_base/1"
 INIT_CHECKPOINT=""
 
-pip3 install --upgrade pip
-pip3 install numpy
-pip3 install -r requirements.txt
+#pip3 install --upgrade pip
+#pip3 install numpy
+#pip3 install -r requirements.txt
 
 function run_task() {
   COMMON_ARGS="--output_dir="${OUTPUT_DIR}/$1" --data_dir="${ALBERT_ROOT}/glue" --vocab_file="${ALBERT_ROOT}/vocab.txt" --spm_model_file="${ALBERT_ROOT}/30k-clean.model" --do_lower_case --max_seq_length=128 --optimizer=adamw --task_name=$1 --warmup_step=$2 --learning_rate=$3 --train_step=$4 --save_checkpoints_steps=$5 --train_batch_size=$6"

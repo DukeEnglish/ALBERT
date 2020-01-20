@@ -21,12 +21,13 @@ from __future__ import print_function
 import os
 import time
 import classifier_utils
+from classifier_utils import *
 import modeling
 import tokenization
 import tensorflow as tf
 from tensorflow.contrib import cluster_resolver as contrib_cluster_resolver
 from tensorflow.contrib import tpu as contrib_tpu
-
+# from classifier_utils import *
 flags = tf.flags
 
 FLAGS = flags.FLAGS
@@ -145,16 +146,24 @@ def main(_):
   tf.logging.set_verbosity(tf.logging.INFO)
 
   processors = {
-      "cola": classifier_utils.ColaProcessor,
-      "mnli": classifier_utils.MnliProcessor,
-      "mismnli": classifier_utils.MisMnliProcessor,
-      "mrpc": classifier_utils.MrpcProcessor,
-      "rte": classifier_utils.RteProcessor,
-      "sst-2": classifier_utils.Sst2Processor,
-      "sts-b": classifier_utils.StsbProcessor,
-      "qqp": classifier_utils.QqpProcessor,
-      "qnli": classifier_utils.QnliProcessor,
-      "wnli": classifier_utils.WnliProcessor,
+       "xnli": XnliProcessor,
+       "tnews": TnewsProcessor,
+       "afqmc": AFQMCProcessor,
+       "iflytek": iFLYTEKDataProcessor,
+       "copa": COPAProcessor,
+       "cmnli": CMNLIProcessor,
+      "wsc": WSCProcessor,
+       "csl": CslProcessor,
+      # "cola": classifier_utils.ColaProcessor,
+      # "mnli": classifier_utils.MnliProcessor,
+      # "mismnli": classifier_utils.MisMnliProcessor,
+      # "mrpc": classifier_utils.MrpcProcessor,
+      # "rte": classifier_utils.RteProcessor,
+      # "sst-2": classifier_utils.Sst2Processor,
+      # "sts-b": classifier_utils.StsbProcessor,
+      # "qqp": classifier_utils.QqpProcessor,
+      # "qnli": classifier_utils.QnliProcessor,
+      # "wnli": classifier_utils.WnliProcessor,
   }
 
   tokenization.validate_case_matches_checkpoint(FLAGS.do_lower_case,
@@ -487,6 +496,6 @@ def main(_):
 if __name__ == "__main__":
   flags.mark_flag_as_required("data_dir")
   flags.mark_flag_as_required("task_name")
-  flags.mark_flag_as_required("spm_model_file")
+  # flags.mark_flag_as_required("spm_model_file")
   flags.mark_flag_as_required("output_dir")
   tf.app.run()
